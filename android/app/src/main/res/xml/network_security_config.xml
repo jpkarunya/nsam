@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  IMPORTANT FOR ANDROID:
+  Android blocks HTTP (non-HTTPS) by default since API 28.
+  This config allows cleartext (HTTP) traffic to:
+    - localhost (emulator uses 10.0.2.2 to reach your PC's localhost)
+    - 192.168.x.x (your PC on local WiFi network)
+  For production, use HTTPS and remove this config.
+-->
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <!-- Android emulator: 10.0.2.2 maps to your computer's localhost -->
+        <domain includeSubdomains="true">10.0.2.2</domain>
+        <!-- Physical device on same WiFi as your PC -->
+        <domain includeSubdomains="true">192.168.0.0</domain>
+        <domain includeSubdomains="true">192.168.1.0</domain>
+        <domain includeSubdomains="true">localhost</domain>
+    </domain-config>
+</network-security-config>
