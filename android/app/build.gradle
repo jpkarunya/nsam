@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace "com.netguard.app"
-    compileSdk 34
+    compileSdk 36
     ndkVersion "25.1.8937393"
 
     compileOptions {
@@ -21,7 +21,7 @@ android {
     defaultConfig {
         applicationId "com.netguard.app"
         minSdk 21
-        targetSdk 34
+        targetSdk 36
         versionCode 1
         versionName "1.0"
     }
@@ -36,3 +36,18 @@ android {
 flutter {
     source "../.."
 }
+```
+
+Commit ✅
+
+---
+
+## Fix 2 — Add missing app icon
+
+Go to your repo → `android` → `app` → `src` → `main` → `res`
+
+You need to create `mipmap-mdpi` folder with an icon. Click **"Add file" → "Create new file"**
+
+Type in filename box:
+```
+mipmap-mdpi/ic_launcher.png
