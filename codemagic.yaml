@@ -6,9 +6,14 @@ workflows:
       flutter: 3.41.4
       java: 17
     scripts:
-      - name: Get Flutter packages
+      - name: Get packages
         script: flutter pub get
       - name: Build APK
-        script: flutter build apk --debug
+        script: |
+          cd android
+          ./gradlew clean
+          cd ..
+          flutter build apk --debug --no-shrink
     artifacts:
       - build/**/outputs/**/*.apk
+      - build/**/outputs/**/*.aab
