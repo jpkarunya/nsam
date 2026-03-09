@@ -66,7 +66,7 @@ def generate_synthetic_dataset(n_samples: int = 10_000, seed: int = 42) -> tuple
     # -----------------------------------------------------------------------
     for _ in range(n_normal):
         protocol = rng.choice(["TCP", "UDP", "ICMP", "OTHER"], p=[0.6, 0.3, 0.05, 0.05])
-        pkt_len = int(rng.normal(800, 400).clip(64, 1500))
+        pkt_len = int(np.clip(rng.normal(800, 400), 64, 1500))
         ttl = int(rng.choice([64, 128, 255]))
         src_port = int(rng.integers(1024, 65535))
         dst_port = int(rng.choice([80, 443, 53, 8080, 22], p=[0.35, 0.35, 0.2, 0.05, 0.05]))
@@ -80,7 +80,7 @@ def generate_synthetic_dataset(n_samples: int = 10_000, seed: int = 42) -> tuple
     # -----------------------------------------------------------------------
     for _ in range(n_suspicious):
         protocol = rng.choice(["TCP", "UDP"], p=[0.7, 0.3])
-        pkt_len = int(rng.normal(200, 100).clip(40, 1000))  # smaller probes
+        pkt_len = int(np.clip(rng.normal(200, 100), 40, 1000))  # smaller probes
         ttl = int(rng.integers(30, 128))
         src_port = int(rng.integers(1024, 65535))
         # Suspicious: unusual destination ports
@@ -98,7 +98,7 @@ def generate_synthetic_dataset(n_samples: int = 10_000, seed: int = 42) -> tuple
 
         if attack_type == "dos":
             protocol = "UDP"
-            pkt_len = int(rng.normal(1400, 100).clip(1000, 1500))  # max-size UDP floods
+            pkt_len = int(np.clip(rng.normal(1400, 100), 1000, 1500))  # max-size UDP floods
             conn_freq = int(rng.integers(500, 5000))
             flow_dur = float(rng.uniform(0.001, 2))
             dst_port = int(rng.integers(1, 1024))
@@ -106,7 +106,7 @@ def generate_synthetic_dataset(n_samples: int = 10_000, seed: int = 42) -> tuple
 
         elif attack_type == "scan":
             protocol = "TCP"
-            pkt_len = int(rng.normal(60, 20).clip(40, 120))  # tiny SYN probes
+            pkt_len = int(np.clip(rng.normal(60, 20), 40, 120))  # tiny SYN probes
             conn_freq = int(rng.integers(200, 1000))
             flow_dur = float(rng.uniform(0.001, 0.1))
             dst_port = int(rng.integers(1, 65535))  # random port scan
@@ -114,7 +114,7 @@ def generate_synthetic_dataset(n_samples: int = 10_000, seed: int = 42) -> tuple
 
         elif attack_type == "exfil":
             protocol = "TCP"
-            pkt_len = int(rng.normal(1400, 50).clip(1200, 1500))  # large data
+            pkt_len = int(np.clip(rng.normal(1400, 50), 1200, 1500))  # large data
             conn_freq = int(rng.integers(100, 500))
             flow_dur = float(rng.uniform(60, 3600))  # long flows
             dst_port = int(rng.choice([443, 80, 4444, 8443]))
@@ -122,7 +122,7 @@ def generate_synthetic_dataset(n_samples: int = 10_000, seed: int = 42) -> tuple
 
         else:  # bruteforce
             protocol = "TCP"
-            pkt_len = int(rng.normal(200, 50).clip(100, 400))
+            pkt_len = int(np.clip(rng.normal(200, 50), 100, 400))
             conn_freq = int(rng.integers(300, 2000))
             flow_dur = float(rng.uniform(0.01, 1))
             dst_port = int(rng.choice([22, 23, 3389, 5900]))
@@ -236,3 +236,4 @@ def train_all_models():
 
 if __name__ == "__main__":
     train_all_models()
+
