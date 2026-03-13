@@ -26,6 +26,8 @@ class ApiService {
   Map<String, String> get _h => {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
+    'ngrok-skip-browser-warning': 'true',
+    'User-Agent': 'NetGuardApp/1.0',
   };
 
   Future<Map<String, dynamic>> _get(String path,
